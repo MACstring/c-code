@@ -1,0 +1,621 @@
+#include<iostream>
+#include <conio.h>
+#include<string>
+#include<cstring>
+#include<fstream>
+
+using namespace std;
+
+void loading()
+{
+    cout << "LOADING.";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+    }
+}
+
+class Person
+{
+private:
+    string name;
+    int ID;
+    int ContactNO;
+public:
+    Person() {}
+    Person(string name, int ID, int ContactNO)
+    {
+        this->name = name;
+        this->ID = ID;
+        this->ContactNO = ContactNO;
+    }
+
+    void setContactN0()
+    {
+        cin >> ContactNO;
+    }
+    void setName()
+    {
+        string name1;
+        cin >> name1;
+        name = name1;
+    }
+
+    void setID()
+    {
+        cin >> ID;
+    }
+    string getName()
+    {
+        return name;
+    }
+
+    int getID()
+    {
+        return ID;
+    }
+    int getContactNo()
+    {
+        return ContactNO;
+    }
+};
+class Date {
+    int month;
+    int year;
+public:
+    Date() {}
+    Date(int month, int year)
+    {
+        this->month = month;
+        this->year = year;
+    }
+    void print()
+    {
+        cout << month << " / " << year;
+    }
+    int getYear()
+    {
+        return year;
+    }
+    void setYear(int y)
+    {
+        year = y;
+    }
+    int getMonth()
+    {
+        return month;
+    }
+    void setMonth(int m)
+    {
+        month = m;
+    }
+    void setDate()
+    {
+        cin >> month >> year;
+    }
+};
+class Hostelite :protected Person
+{
+protected:
+    int room_number;
+    string  status;
+    int beds;
+    long rent;
+    Person P;
+    Date DOJ;
+    Date DOB;
+public:
+    Hostelite() {}
+    void Print()
+    {
+        cout << "Room number " << room_number << endl;
+        cout << "Status " << status << endl;
+        cout << "Beds" << beds << endl;
+        cout << "Rent" << rent << endl;
+    }
+
+    void setRoom_Number()
+    {
+        cin >> room_number;
+    }
+    void setStatus(string status)
+    {
+        this->status = status;
+    }
+    void setBeds()
+    {
+        cin >> beds;
+    }
+    void setRent(long rent)
+    {
+        cin >> rent;
+    }
+
+    int getRoom_number()
+    {
+        return room_number;
+    }
+    string getStatus()
+    {
+        return status;
+    }
+    int getBeds()
+    {
+        return beds;
+    }
+    long getRent()
+    {
+        return rent;
+    }
+    void  writeToDisk() {
+
+        ofstream f("Student.txt", ios::app | ios::binary);
+        f.write(reinterpret_cast<char*>(this), sizeof(*this));
+        f.close();
+
+    }
+    void readfromdisk()
+    {
+        ifstream f;
+        f.open("Student.txt", ios::binary);
+
+        f.read(reinterpret_cast<char*>(this), sizeof(*this));
+        f.close();
+
+    }
+
+    void BookRoom()
+    {
+        {
+            loading();
+            system("cls");
+            cout << "Press 1 to Book a room with 1 bed " << endl;
+            cout << "Press 2 to Book a room with 2 beds " << endl;
+            cout << "Press 3 to Book a room with 3 beds " << endl;
+            cout << "Press 4 to book a room with 4 beds " << endl;
+            cout << "Enter your choice \n";
+
+            int choice;
+            cin >> choice;
+            static int number = 1;
+            switch (choice)
+            {
+            case 1:
+                system("cls");
+                char choice1;
+                cout << "Per Person Monthly Rent for a Room with 1 bed is 20000" << endl;
+                cout << "....Do you wish to proceed with your Booking(Y / N) ?" << endl;
+                cout << "----------------------------------------------------------------------------------\n";
+                cin >> choice1;
+                if ((choice1 == 'y') || (choice1 == 'Y'))
+                {
+                    system("cls");
+                    room_number = 1;
+
+                    setStatus("OCCUPIED");
+                    number++;
+                    beds = 1;
+                    rent = 20000;
+
+                    cout << "Enter Name for the Hostelite "  << ":\t";
+                    P.setName();
+                    cout << "----------------------------------------------------------------------------------\n";
+
+                    cout << "Enter the Id for the Hostelite: " << ":\t";
+                    P.setID();
+                    cout << "----------------------------------------------------------------------------------\n";
+
+                    cout << "Enter the contact number of the Hostelite: " <<  ":\t";
+                    P.setContactN0();
+                    cout << "----------------------------------------------------------------------------------\n";
+
+                    cout << "Enter date of Joining\t";
+                    DOJ.setDate();
+                    cout << "----------------------------------------------------------------------------------\n";
+                    cout << "Room Booked Successfully for 2 persons....Your Room Number is:  " << room_number << endl;
+                    break;
+                }
+
+            case 2:
+                system("cls");
+                char choice2;
+                cout << "Per Person Rent for a room with 2 bed is 17500....Do you wish to proceed with your Booking(Y/N)?\n";
+                cin >> choice2;
+                if ((choice2 == 'y') || (choice2 == 'Y'))
+                {
+                    system("cls");
+                    room_number = number;
+                    setStatus("OCCUPIED");
+                    beds = 2;
+                    rent = 17500;
+                    number++;
+
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        cout << "Enter the  Name for the Hostelite " << i << ":\t";
+                        P.setName();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter the Id for the Hostelite: " << i << ":\t";
+                        P.setID();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter the contact number of the Hostelite: " << i << ":\t";
+                       P.setContactN0();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter date of Joining\t";
+                        DOJ.setDate();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+
+                    }
+
+
+                    cout << "Room Booked Successfully for 2 persons....Your Room Number is:  " << room_number << endl;
+                    break;
+                }
+            case 3:
+                system("cls");
+                char choice3;
+                cout << "Per Person Rent for a room with 3 bed is 15000....Do you wish to proceed with your Booking(Y/N)?\n";
+                cin >> choice3;
+                if ((choice3 == 'y') || (choice3 == 'Y'))
+                {
+                    system("cls");
+                    room_number = number;
+                    setStatus("OCCUPIED");
+
+                    beds = 3;
+                    rent = 15000;
+                    number++;
+
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        cout << "Enter the  Name for the Hostelite " << i << ":\t";
+                        P.setName();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter the Id for the Hostelite: " << i << ":\t";
+                        P.setID();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter the contact number of the Hostelite: " << i << ":\t";
+                        P.setContactN0();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter date of Joining\t";
+                        DOJ.setDate();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+
+                    }
+
+                    cout << "Room Booked Successfully for 3 persons....Your Room Number is:  " << room_number << endl;
+                    break;
+                }
+            case 4:
+
+                system("cls");
+                char choice4;
+                cout << "Per Person Rent for a room with 4 bed is 12500....Do you wish to proceed with your Booking(Y/N)?\n";
+                cin >> choice4;
+                if ((choice4 == 'y') || (choice4 == 'Y'))
+                {
+                    system("cls");
+                    room_number = number;
+                    setStatus("OCCUPIED");
+
+                    beds = 4;
+                    rent = 12500;
+                    number++;
+
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        cout << "Enter the  Name for the Hostelite " << i << ":\t";
+                        P.setName();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter the Id for the Hostelite: " << i << ":\t";
+                        P.setID();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter the contact number of the Hostelite: " << i << ":\t";
+                        P.setContactN0();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                        cout << "Enter date of Joining\t";
+                        DOJ.setDate();
+                        cout << "----------------------------------------------------------------------------------\n";
+
+                    }
+
+                    cout << "Room Booked Successfully for 4 persons....Your Room Number is:  " << room_number << endl;
+                    break;
+                }
+
+
+
+                cout << "Room Booked Successfully....Your Room Number is:  " << room_number << endl;
+                break;
+            }
+
+        }
+        char ch;
+        cout << "\nEnter 'y' to save above information\n";
+        cin >> ch;
+        if (ch == 'y' || ch == 'Y')
+        {
+            Hostelite H;
+            H.writeToDisk();
+
+        }
+        char choice123;
+        do
+        {
+            cout << "\n\nPress 'Y' to go to the main menu or Press 'N to exit \t";
+            cin >> choice123;
+            if (choice123 == 'n' || choice123 == 'N')
+            {
+                exit(0);
+            }
+            if (choice123 == 'Y' || choice123 == 'y')
+            {
+                return;
+            }
+            system("cls");
+        } while ((choice123 != 'Y') && (choice123 != 'y'));
+    }
+    void DisplayRooms()
+    {
+        loading();
+        Hostelite H;
+        system("cls");
+        cout << "\n===================================================================================================\n";
+        cout << "Room Number\t\t\tSatus\t\t\tBeds\t\t\tMonthly Per Person Rent";
+        H.readfromdisk();
+        cout << "\n===================================================================================================\n";
+
+
+
+        char choice123;
+        do
+        {
+
+            cout << "\n\nPress 'Y' to go to the main menu or Press 'N to exit \t";
+            cin >> choice123;
+            if (choice123 == 'n' || choice123 == 'N')
+            {
+                exit(0);
+            }
+            if (choice123 == 'y' || choice123 == 'Y')
+            {
+             
+                return;
+            }
+
+            system("cls");
+        } while ((choice123 != 'Y') && (choice123 != 'y'));
+    }
+    void PrintHostelites()
+    {
+        loading();
+        system("cls");
+        Hostelite H;
+        cout << "\n=======================================================================================================================\n";
+        cout << "Name\t\t\tRoom Number\t\t\tID\t\t\tContact Number\t\t\tMonthly Rent\t\t\t Date of joining";
+        H.readfromdisk();
+        cout << "\n=======================================================================================================================\n";
+
+        char choice1234;
+        do
+        {
+
+            cout << "\n\nPress 'Y' to go to the main menu or Press 'N to exit \t";
+            cin >> choice1234;
+            if (choice1234 == 'n' || choice1234 == 'N')
+            {
+                exit(0);
+            }
+            if (choice1234 == 'y' || choice1234 == 'Y')
+            {
+                //main_menu();
+            }
+            system("cls");
+        } while ((choice1234 != 'Y') && (choice1234 != 'y'));
+    }
+ 
+};
+class Employee :protected Person
+{
+protected:
+    Person P;
+    string Designiation;
+    Date DOB;
+    long salary;
+public:
+    Employee() {};
+    Employee(Person name, string Designiation, Date DOB, long salary)
+    {
+        this->P = name;
+        this->Designiation = Designiation;
+        this->DOB = DOB;
+        this->salary = salary;
+    };
+    void  writeToDisk() {
+
+        ofstream f("Employee.txt", ios::app | ios::binary);
+        f.write(reinterpret_cast<char*>(this), sizeof(*this));
+        f.close();
+
+    }
+    void readfromdisk()
+    {
+        ifstream f;
+        f.open("Employee.txt", ios::binary);
+
+        f.read(reinterpret_cast<char*>(this), sizeof(*this));
+        f.close();
+
+    }
+    void setDesigniation()
+    {
+        cin >> Designiation;
+    }
+    string getDesigniation()
+    {
+        return Designiation;
+    }
+    void setSalary()
+    {
+        cin >> salary;
+    }
+    long getSalary()
+    {
+        return salary;
+    }
+    void addEmployee()
+    {
+        loading();
+        system("cls");
+        Employee E;
+        cout << "\n----------------------------------------\n";
+        cout << "\n Enter Name of Employee: ";
+        P.setName();
+        cout << "\n----------------------------------------\n";
+        cout << "\n Enter Phone Number: ";
+        P.setContactN0();
+        cout << "\n----------------------------------------\n";
+        cout << "\n Enter Employee Number: ";
+        P.setID();
+        cout << "\n----------------------------------------";
+        cout << "\n Enter Employee DOB (Month and Year): ";
+        DOB.setDate();
+        cout << "\n----------------------------------------\n";
+        cout << "\n Enter Designation: ";
+        E.setDesigniation();
+        cout << "\n----------------------------------------\n";
+        cout << "\n Enter Salary: ";
+        E.setSalary();
+        cout << "\n----------------------------------------\n";
+        cout << "Data Entered Successfully \n";
+        cout << "\n----------------------------------------\n";
+
+        char ch;
+        cout << "\nEnter 'y' to save above information\n";
+        cin >> ch;
+        if (ch == 'y' || ch == 'Y')
+        {
+
+            E.writeToDisk();
+
+        }
+
+        char choice123;
+        do
+        {
+            cout << "\n\nPress 'Y' to go to the main menu or Press 'N to exit \t";
+            cin >> choice123;
+            if (choice123 == 'n' || choice123 == 'N')
+            {
+                exit(0);
+            }
+            if (choice123 == 'y' || choice123 == 'Y')
+            {
+                return;
+            }
+
+            system("cls");
+        } while ((choice123 != 'Y') && (choice123 != 'y'));
+    }
+    void printEmployee()
+    {
+        loading();
+        system("cls");
+        cout << "\n===============================================================================================================================================\n";
+        cout << "Name\t\t\tDesignation\t\t\tDOB\t\t\tEmployee Number\t\t\tContact Number\t\t\tSalary" << endl;
+         Employee E;
+         E.readfromdisk();
+        cout << "\n===============================================================================================================================================\n";
+
+
+        char choice123;
+        do
+        {
+            cout << "\n\nPress 'Y' to go to the main menu or Press 'N to exit \t";
+            cin >> choice123;
+            if (choice123 == 'n' || choice123 == 'N')
+            {
+                exit(0);
+            }
+            if (choice123 == 'y' || choice123 == 'Y')
+            {
+             
+                return;
+            }
+            system("cls");
+        } while ((choice123 != 'Y') && (choice123 != 'y'));
+    }
+};
+
+void mainmenu()
+{
+    Hostelite H;
+    Employee E;
+            loading();
+            system("cls");
+
+            // Options to choose an action
+            cout << "\n\t\t\t>>>>>>>>>  HOSTEL MANAGEMENT SYSTEM  <<<<<<<<<";
+            cout << "\n";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\t\t\tENTER   1:   TO BOOK A ROOM";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\t\t\tENTER   2:   TO SHOW THE STATUS OF ALL ROOMS";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\t\t\tENTER   3:   TO DISPLAY ALL CURRENT HOSTELITES";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\t\t\tENTER   4:   TO ADD AN EMPLOYEE";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\t\t\tENTER   5:  TO DISPLAY ALL LISTED EMPLOYEES";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\t\t\tENTER   0:   TO EXIT PROGRAM";
+            cout << "\n\t\t\t------------------------------------------------";
+            cout << "\n\n\t\t\t   Please Enter Your Choice: ";
+
+            // Taking the action input
+            int choice;
+            cin >> choice;
+            // Calling relevant function as per choice
+            switch (choice)
+            {
+            case 0:
+                system("cls");
+                cout << "\n\nHOSTEL MANAGEMENT SYSTEM ....Program Finished\n\n";
+                exit(0);
+
+                return;
+            case 1:
+               H.BookRoom();
+                break;
+            case 2:
+                H.DisplayRooms();
+                break;
+
+           
+            case 3:
+                H.PrintHostelites();
+                break;
+            case 4:
+                E.addEmployee();
+                break;
+
+            case 5:
+                E.printEmployee();
+                break;
+
+            default:
+                cout << "\n Please Enter a Valid Choice! \n";
+                break;
+            }
+        }
